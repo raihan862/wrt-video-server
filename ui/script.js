@@ -4,7 +4,7 @@ const inp = document.getElementById("name");
 navigator.mediaDevices
   .getUserMedia({ video: true, audio: true })
   .then(function (stream) {
-    var video = document.querySelector("video");
+    const video = document.querySelector("video");
 
     video.srcObject = stream;
     video.onloadedmetadata = function (e) {
@@ -15,14 +15,14 @@ navigator.mediaDevices
       inp.innerText = "Your User Id is" + uid;
       id = uid;
     });
-    mediaRecorder = new MediaRecorder(stream);
+    const mediaRecorder = new MediaRecorder(stream);
     mediaRecorder.start(1);
 
-    mediaRecorder.ondataavailable = async (e) => {
+    mediaRecorder.ondataavailable = (e) => {
       video.style.background = "red";
       video.style.color = "black";
 
-      socket.emit("videoChunk", e.data, id || "rayhan");
+      socket.emit("videoChunk", e.data, id);
     };
     setTimeout(() => {
       mediaRecorder.stop();
